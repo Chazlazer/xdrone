@@ -32,9 +32,8 @@ int main()
         cleanup();
         return 0; // quit now
     }
-    radio.setAutoAck(false);
-    radio.setPALevel(RF24_250KBPS);
-    radio.openReadingPipe(1, address);
+    radio.openReadingPipe(0, address);
+    radio.setPALevel(RF24_PA_MIN);
     radio.startListening();
 
     digitalWrite(0,HIGH);
@@ -63,6 +62,11 @@ void recieve_data(){
         radio.read(&data_in, sizeof(data_in));
         std::cout << "Received data: " << (int)data_in.JOYSTICK_R_X << " " << (int)data_in.JOYSTICK_R_Y << " " << (int)data_in.BUTTON_A << " " << (int)data_in.BUTTON_B << std::endl;
     }
+    // if(radio.available()){
+    //     char text[32] = "";
+    //     radio.read(&text, sizeof(text));
+    //     std::cout << "Received data: " << text << std::endl;
+    // }
 }
 
 // void displayInfo()
