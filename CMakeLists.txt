@@ -16,11 +16,20 @@ file(GLOB SOURCES
     ${CMAKE_SOURCE_DIR}/source/*.cpp
 )
 
-# Add main.cpp explicitly
 add_executable(main
     main.cpp
     ${SOURCES}
 )
 
-# Link WiringPi
-target_link_libraries(main wiringPi)
+# Find RF24 library
+find_library(RF24_LIB
+    NAMES rf24
+    PATHS /usr/local/lib
+)
+
+# Link libraries
+target_link_libraries(main
+    wiringPi
+    ${RF24_LIB}
+    pthread
+)
